@@ -738,7 +738,7 @@ test_submit$comp4 <- rowMeans(test_submit[,c('gun','Xv4')],na.rm=TRUE)
 
 final_test <- test_submit[,c(1,34:126)]
 
-train <- full_data[,colnames(full_data)%in%colnames(final_test)]
+train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
 
 out <- full_data$y1
 
