@@ -43,6 +43,132 @@ test_submit$age5 <- ifelse(test_submit$Age_at_Release=='38-42',1,0)
 test_submit$age6 <- ifelse(test_submit$Age_at_Release=='43-47',1,0)
 test_submit$age7 <- ifelse(test_submit$Age_at_Release=='48 or older',1,0)
 
+# Polynomial contrasts for Age at Release
+
+cont <- as.matrix(contr.poly(7))
+
+full_data$age1c <- round(recode(.x = full_data$Age_at_Release,
+                                 '18-22' = cont[1,1],
+                                 '23-27' = cont[2,1],
+                                 '28-32' = cont[3,1],
+                                 '33-37' = cont[4,1],
+                                 '38-42' = cont[5,1],
+                                 '43-47' = cont[6,1],
+                                 '48 or older' = cont[7,1]),3)
+
+full_data$age2c <- round(recode(.x = full_data$Age_at_Release,
+                                '18-22' = cont[1,2],
+                                '23-27' = cont[2,2],
+                                '28-32' = cont[3,2],
+                                '33-37' = cont[4,2],
+                                '38-42' = cont[5,2],
+                                '43-47' = cont[6,2],
+                                '48 or older' = cont[7,2]),3)
+
+
+full_data$age3c <- round(recode(.x = full_data$Age_at_Release,
+                                '18-22' = cont[1,3],
+                                '23-27' = cont[2,3],
+                                '28-32' = cont[3,3],
+                                '33-37' = cont[4,3],
+                                '38-42' = cont[5,3],
+                                '43-47' = cont[6,3],
+                                '48 or older' = cont[7,3]),3)
+
+
+full_data$age4c <- round(recode(.x = full_data$Age_at_Release,
+                                '18-22' = cont[1,4],
+                                '23-27' = cont[2,4],
+                                '28-32' = cont[3,4],
+                                '33-37' = cont[4,4],
+                                '38-42' = cont[5,4],
+                                '43-47' = cont[6,4],
+                                '48 or older' = cont[7,4]),3)
+
+
+full_data$age5c <- round(recode(.x = full_data$Age_at_Release,
+                                '18-22' = cont[1,5],
+                                '23-27' = cont[2,5],
+                                '28-32' = cont[3,5],
+                                '33-37' = cont[4,5],
+                                '38-42' = cont[5,5],
+                                '43-47' = cont[6,5],
+                                '48 or older' = cont[7,5]),3)
+
+
+full_data$age6c <- round(recode(.x = full_data$Age_at_Release,
+                                '18-22' = cont[1,6],
+                                '23-27' = cont[2,6],
+                                '28-32' = cont[3,6],
+                                '33-37' = cont[4,6],
+                                '38-42' = cont[5,6],
+                                '43-47' = cont[6,6],
+                                '48 or older' = cont[7,6]),3)
+
+
+
+
+
+test_submit$age1c <- round(recode(.x = test_submit$Age_at_Release,
+                                '18-22' = cont[1,1],
+                                '23-27' = cont[2,1],
+                                '28-32' = cont[3,1],
+                                '33-37' = cont[4,1],
+                                '38-42' = cont[5,1],
+                                '43-47' = cont[6,1],
+                                '48 or older' = cont[7,1]),3)
+
+test_submit$age2c <- round(recode(.x = test_submit$Age_at_Release,
+                                '18-22' = cont[1,2],
+                                '23-27' = cont[2,2],
+                                '28-32' = cont[3,2],
+                                '33-37' = cont[4,2],
+                                '38-42' = cont[5,2],
+                                '43-47' = cont[6,2],
+                                '48 or older' = cont[7,2]),3)
+
+
+test_submit$age3c <- round(recode(.x = test_submit$Age_at_Release,
+                                '18-22' = cont[1,3],
+                                '23-27' = cont[2,3],
+                                '28-32' = cont[3,3],
+                                '33-37' = cont[4,3],
+                                '38-42' = cont[5,3],
+                                '43-47' = cont[6,3],
+                                '48 or older' = cont[7,3]),3)
+
+
+test_submit$age4c <- round(recode(.x = test_submit$Age_at_Release,
+                                '18-22' = cont[1,4],
+                                '23-27' = cont[2,4],
+                                '28-32' = cont[3,4],
+                                '33-37' = cont[4,4],
+                                '38-42' = cont[5,4],
+                                '43-47' = cont[6,4],
+                                '48 or older' = cont[7,4]),3)
+
+
+test_submit$age5c <- round(recode(.x = test_submit$Age_at_Release,
+                                '18-22' = cont[1,5],
+                                '23-27' = cont[2,5],
+                                '28-32' = cont[3,5],
+                                '33-37' = cont[4,5],
+                                '38-42' = cont[5,5],
+                                '43-47' = cont[6,5],
+                                '48 or older' = cont[7,5]),3)
+
+
+test_submit$age6c <- round(recode(.x = test_submit$Age_at_Release,
+                                '18-22' = cont[1,6],
+                                '23-27' = cont[2,6],
+                                '28-32' = cont[3,6],
+                                '33-37' = cont[4,6],
+                                '38-42' = cont[5,6],
+                                '43-47' = cont[6,6],
+                                '48 or older' = cont[7,6]),3)
+
+
+
 # A numeric age variable by assigning the midpoint of each interval
 
 full_data$age <- recode(.x = full_data$Age_at_Release,
@@ -173,6 +299,34 @@ test_submit$slevel3 <- recode(.x = test_submit$Supervision_Level_First,
                             'Specialized' = 0,
                             'Standard' = 1)
 
+
+# Polynomial Contrasts Supervision_Level_First
+
+cont <- as.matrix(contr.poly(3))
+
+full_data$slevel1c <- round(recode(.x = full_data$Supervision_Level_First,
+                                'Standard' = cont[1,1],
+                                'Specialized' = cont[2,1],
+                                'High' = cont[3,1]),3)
+
+full_data$slevel2c <- round(recode(.x = full_data$Supervision_Level_First,
+                                   'Standard' = cont[1,2],
+                                   'Specialized' = cont[2,2],
+                                   'High' = cont[3,2]),3)
+
+
+
+test_submit$slevel1c <- round(recode(.x = test_submit$test_submit$Supervision_Level_First,
+                                   'Standard' = cont[1,1],
+                                   'Specialized' = cont[2,1],
+                                   'High' = cont[3,1]),3)
+
+test_submit$slevel2c <- round(recode(.x = test_submit$Supervision_Level_First,
+                                   'Standard' = cont[1,2],
+                                   'Specialized' = cont[2,2],
+                                   'High' = cont[3,2]),3)
+
+
 # Education Level
 
 full_data$educ1 <- ifelse(full_data$Education_Level=='At least some college',1,0)
@@ -190,6 +344,34 @@ test_submit$educ  <- recode(.x = test_submit$Education_Level,
                           'At least some college' = 1,
                           'High School Diploma' = 2,
                           'Less than HS diploma' = 3)
+
+# Polynomial Contrasts for Education Level
+
+
+cont <- round(as.matrix(contr.poly(3)),3)
+
+full_data$educ1c <- recode(.x                        = full_data$Education_Level,
+                              'Less than HS diploma' = cont[1,1],
+                              'High School Diploma'  = cont[2,1],
+                              'At least some college'= cont[3,1])
+
+full_data$educ2c <- recode(.x                        = full_data$Education_Level,
+                           'Less than HS diploma' = cont[1,2],
+                           'High School Diploma'  = cont[2,2],
+                           'At least some college'= cont[3,2])
+
+
+test_submit$educ1c <- recode(.x                        = test_submit$Education_Level,
+                           'Less than HS diploma' = cont[1,1],
+                           'High School Diploma'  = cont[2,1],
+                           'At least some college'= cont[3,1])
+
+test_submit$educ2c <- recode(.x                        = test_submit$Education_Level,
+                           'Less than HS diploma' = cont[1,2],
+                           'High School Diploma'  = cont[2,2],
+                           'At least some college'= cont[3,2])
+
+
 
 # Dependents
 
@@ -213,7 +395,6 @@ test_submit$dep  <- recode(.x = test_submit$Dependents,
                          '1' = 2,
                          '2' = 3,
                          '3 or more'=4)
-
 
 
 # One hot encoding of Prison Offense
@@ -254,8 +435,6 @@ full_data$off5 <- recode(.x = full_data$Prison_Offense,
                          'Violent/Sex'=1)
 
 
-
-
 test_submit$off1 <- recode(.x = test_submit$Prison_Offense,
                          'Drug' = 1,
                          'Other' = 0,
@@ -290,8 +469,6 @@ test_submit$off5 <- recode(.x = test_submit$Prison_Offense,
                          'Property' = 0,
                          'Violent/Non-Sex' = 0,
                          'Violent/Sex'=1)
-
-
 
 
 # One hot encoding of Prison years
@@ -346,6 +523,49 @@ test_submit$year4 <- recode(.x = test_submit$Prison_Years,
                           'Greater than 2 to 3 years'= 0,
                           'Less than 1 year' = 0,
                           'More than 3 years' = 1)
+
+
+# Polynomial Contrasts for Prison years
+
+
+cont <- round(as.matrix(contr.poly(4)),3)
+
+full_data$year1c <- recode(.x                         = full_data$Prison_Years,
+                           'Less than 1 year'         = cont[1,1],
+                           '1-2 years'                = cont[2,1],
+                           'Greater than 2 to 3 years'= cont[3,1],
+                           'More than 3 years'        = cont[4,1])
+
+full_data$year2c <- recode(.x                         = full_data$Prison_Years,
+                           'Less than 1 year'         = cont[1,2],
+                           '1-2 years'                = cont[2,2],
+                           'Greater than 2 to 3 years'= cont[3,2],
+                           'More than 3 years'        = cont[4,2])
+
+full_data$year3c <- recode(.x                         = full_data$Prison_Years,
+                           'Less than 1 year'         = cont[1,3],
+                           '1-2 years'                = cont[2,3],
+                           'Greater than 2 to 3 years'= cont[3,3],
+                           'More than 3 years'        = cont[4,3])
+
+
+test_submit$year1c <- recode(.x                         = test_submit$Prison_Years,
+                           'Less than 1 year'         = cont[1,1],
+                           '1-2 years'                = cont[2,1],
+                           'Greater than 2 to 3 years'= cont[3,1],
+                           'More than 3 years'        = cont[4,1])
+
+test_submit$year2c <- recode(.x                         = test_submit$Prison_Years,
+                           'Less than 1 year'         = cont[1,2],
+                           '1-2 years'                = cont[2,2],
+                           'Greater than 2 to 3 years'= cont[3,2],
+                           'More than 3 years'        = cont[4,2])
+
+test_submit$year3c <- recode(.x                         = test_submit$Prison_Years,
+                           'Less than 1 year'         = cont[1,3],
+                           '1-2 years'                = cont[2,3],
+                           'Greater than 2 to 3 years'= cont[3,3],
+                           'More than 3 years'        = cont[4,3])
 
 
 # Prior_Arrest_Episodes_Felony
@@ -732,15 +952,20 @@ test_submit$comp2 <- rowMeans(test_submit[,c('drug','cdrug')],na.rm=TRUE)
 test_submit$comp3 <- rowMeans(test_submit[,c('viol','dv','Xv3')],na.rm=TRUE)
 test_submit$comp4 <- rowMeans(test_submit[,c('gun','Xv4')],na.rm=TRUE)
 
-
 ###############################################################################
 
 
-final_test <- test_submit[,c(1,34:126)]
 
-train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
 
-out <- full_data$y1
+
+
+###############################################################################
+
+#final_test <- test_submit[,c(1,34:126)]
+
+#train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
+
+#out <- full_data$y1
 
 
 

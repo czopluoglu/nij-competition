@@ -1,0 +1,57 @@
+
+require(tidycensus)
+
+
+pumas <- c(1003,4400,1008, 4300,1200, 1300, 1400, 1500, 1600,1700, 1800,2001, 
+           2002, 2003, 4005,100, 200, 500,4000, 4100, 4200,5001, 6001, 6002,
+           2400, 5002, 1001, 3004, 4600, 1002, 1005, 3300, 3400, 4001, 4002, 
+           4006, 3101, 3102, 1900, 3900, 4003, 4004, 3001, 3002, 3003, 3005,
+           2500, 4500,2800, 2900, 3200, 3500,600, 700, 800,900, 1100,300, 
+           401, 402,1004, 2100,2200, 2300,1006, 1007, 2004,2600, 2700,3600, 
+           3700, 3800)
+
+geodata <- get_pums(variables = 
+                      c("AGEP",'FAGEP',"PUMA",'NP','ACCESS','FACCESSP','ACR','FACRP',
+                        'AGS','FAGSP','BATH','FBATHP','BLD', 'FBLDP','FBDSP',
+                        'BUS','FBUSP','BROADBND','FBROADBNDP','COMPOTHX',
+                        'FCOMPOTHXP','CONP','FCONP','DIALUP','FDIALUPP',
+                        'ELEFP','FELEP','ELEP','FS','FFSP','FULFP','FULP',
+                        'FFULP','GASFP','GASP','FGASP','HFL', 'FHFLP',
+                        'HISPEED','FHISPEEDP','HOTWAT','FHOTWATP','INSP','FINSP',
+                        'LAPTOP','FLAPTOPP','MHP','FMHP','MRGI','FMRGIP',
+                        'MRGP','FMRGP','MRGT','FMRGTP','MRGX','FMRGXP',
+                        'OTHSVCEX','FOTHSVCEXP','REFR','FREFRP','RMSP','FRMSP',
+                        'RNTM','FRNTMP','RWAT','FRWATP','RWATPR','SATELLITE',
+                        'FSATELLITEP','SINK','FSINKP','SMARTPHONE','FSMARTPHONP',
+                        'SMP','FSMP','FSMOCP','STOV','FSTOVP','TABLET','FTABLETP',
+                        'TEL','FTELP','TEN','FTENP','TOIL','FTOILP','VALP','FVALP',
+                        'VEH','FVEHP','WATFP','FWATP','WATP','YBL','FYBLP','FES',
+                        'FINCP','FFINCP','FPARC','GRNTP','FGRNTP','GRPIP','HHL',
+                        'HHT','HINCP','FHINCP','HUGCL','HUPAC','HUPAOC','HUPARC',
+                        'KIT','FKITP','LNGI','MULTG','MV','FMVP','NOC','NPF',
+                        'NPP','NR','NRC','OCPIP','PARTNER','PLM','FPLMP','PSF',
+                        'R18','R60','R65','SMOCP','SMX','FSMXSP','SRNT','SSMC',
+                        'SVAL','TAXAMT','WIF','FSMXHP','FTAXP','FVACSP','CIT',
+                        'FCITP','COW','FCOWP','DDRS','FDDRSP','DEAR','FDEARP',
+                        'DEYE','FDEYEP','DOUT','FDOUTP','DPHY','FDPHYP',
+                        'DRAT', 'FDRATP','DRATX','FDRATXP','DREM','FDREMP',
+                        'ENG','FENGP','FER','FFERP','GCL','FGCLP','GCM','FGCMP',
+                        'GCR','FGCRP','HINS1','FHINS1P','HINS2','FHINS2P','HINS3',
+                        'FHINS3P','HINS4','FHINS4P','HINS5','FHINS5P','HINS6',
+                        'FHINS6P','HINS7','FHINS7P','INTP','FINTP','JWMNP','JWRIP',
+                        'FJWRIP','JWTR','FJWTRP','LANX','FLANXP','MAR','FMARP',
+                        'MARHD','FMARHDP','MARHM', 'FMARHMP','MARHT','FMARHTP',
+                        'MARHW','FMARHWP','MIG','FMIGP','MIL','FMILPP','MLPA',
+                        'MLPB','MLPCD','MLPE','MLPFG','MLPH','MLPI','MLPJ','MLPK',
+                        'NWAB','NWAV','NWLA','NWLK','NWRE','OIP','FOIP','PAP', 'FPAP',
+                        'RETP','FRETP','SCH','SEMP', 'FSEMP','SSIP','FSSIP','SSP','FSSP',
+                        'WAGP','FWAGP','WKHP','FWKHP','WKL','FWKLP','WKW','FWKWP',
+                        'WRK','FWRKP','DIS','MSP','NATIVITY','OC','PAOC','PERNP',
+                        'PINCP','POVPIP','PRIVCOV','FPRIVCOVP','PUBCOV','FPUBCOVP',
+                        'RACAIAN','RACASN','RACBLK','RACNH','RACNUM','RACPI','RACWHT',
+                        'RC','SCIENGP','SCIENGRLP','FESRP','FHICOVP','FLANP',
+                        'FMARHYP','FMIGSP','FMILSP','FPERNP','FPINCP'), 
+              state = "GA",
+              year = 2018)
+
+

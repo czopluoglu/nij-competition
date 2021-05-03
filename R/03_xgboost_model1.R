@@ -3,6 +3,15 @@ require(caret)
 require(pROC)
 require(xgboostExplainer)
 
+
+###############################################################################
+
+final_test <- test_submit[,c(1,34:126)]
+
+train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
+
+out <- full_data$y1
+
 ###############################################################################
 
 eval <- function(x,type){
