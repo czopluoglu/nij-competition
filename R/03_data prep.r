@@ -952,20 +952,154 @@ test_submit$comp2 <- rowMeans(test_submit[,c('drug','cdrug')],na.rm=TRUE)
 test_submit$comp3 <- rowMeans(test_submit[,c('viol','dv','Xv3')],na.rm=TRUE)
 test_submit$comp4 <- rowMeans(test_submit[,c('gun','Xv4')],na.rm=TRUE)
 
-###############################################################################
-
-
-
-
-
 
 ###############################################################################
 
-#final_test <- test_submit[,c(1,34:126)]
+final_test <- test_submit[,c(1,34:138)]
 
-#train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
+train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
 
-#out <- full_data$y1
+out <- full_data$y1
+
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+
+crime <- read.csv(here('data','supplemental data','crime_summary.csv'))
+puma  <- read.csv(here('data','supplemental data','puma_summary.csv'))
+
+list1 <- vector('list',nrow(train_))
+list2 <- vector('list',nrow(train_))
+
+for(i in 1:nrow(train_)){
+  
+  id1  <- which(train_[i,18:42]==1)
+  id2 <- as.numeric(trimws(strsplit(crime[id1,2],",")[[1]]))
+  
+  list1[[i]] <- t(data.frame(a = colMeans(puma[puma$puma%in%id2,2:299])))
+  list2[[i]] <- crime[id1,4:12]
+  
+  print(i)
+}
+
+crime_ <- smartbind(list = list1)
+
+puma_ <- smartbind(list = list2)
+
+train_ <- cbind(train_,crime_,puma_)
+
+###############################################################################
+
+list1 <- vector('list',nrow(final_test))
+list2 <- vector('list',nrow(final_test))
+
+for(i in 1:nrow(final_test)){
+  
+  id1  <- which(final_test[i,18:42]==1)
+  id2 <- as.numeric(trimws(strsplit(crime[id1,2],",")[[1]]))
+  
+  list1[[i]] <- t(data.frame(a = colMeans(puma[puma$puma%in%id2,2:299])))
+  list2[[i]] <- crime[id1,4:12]
+  
+  print(i)
+}
+
+crime_ <- smartbind(list = list1)
+
+puma_ <- smartbind(list = list2)
+
+final_test <- cbind(final_test,crime_,puma_)
+
+
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+
+vital        <- read_excel(here('data','supplemental data','vital by county.xlsx'))
+lottery      <- read_excel(here('data','supplemental data','lottery by county.xlsx'))
+poverty      <- read_excel(here('data','supplemental data','poverty by county.xlsx'))
+voting       <- read_excel(here('data','supplemental data','voting by county.xlsx'))
+hospital     <- read_excel(here('data','supplemental data','hospital by county.xlsx'))
+unemployment <- read_excel(here('data','supplemental data','unemployment by county.xlsx'))
+assistance   <- read_excel(here('data','supplemental data','public assistance by county.xlsx'))
+urban        <- read_excel(here('data','supplemental data','urban pop by county.xlsx'))
+popgender    <- read_excel(here('data','supplemental data','population by gender age.xlsx'))
+popage       <- read_excel(here('data','supplemental data','population by age.xlsx'))
+std          <- read_excel(here('data','supplemental data','stdby county.xlsx'))
+medicare     <- read_excel(here('data','supplemental data','medicare by county.xlsx'))
+transfer     <- read_excel(here('data','supplemental data','transfer by county.xlsx'))
+income       <- read_excel(here('data','supplemental data','income by county.xlsx'))
+bankruptcy   <- read_excel(here('data','supplemental data','bankruptcy by county.xlsx'))
+agricultural <- read_excel(here('data','supplemental data','agricultural by county.xlsx'))
+juvenile     <- read_excel(here('data','supplemental data','juvenile court by county.xlsx'))
+cr           <- read_excel(here('data','supplemental data','cr2017.xlsx'))
+
+all <- merge(vital,lottery,by='county')
+all <- merge(all,poverty,by='county')
+all <- merge(all,voting,by='county')
+all <- merge(all,hospital,by='county')
+all <- merge(all,unemployment,by='county')
+all <- merge(all,assistance,by='county')
+all <- merge(all,urban,by='county')
+all <- merge(all,popgender,by='county')
+all <- merge(all,popage,by='county')
+all <- merge(all,std,by='county')
+all <- merge(all,medicare,by='county')
+all <- merge(all,transfer,by='county')
+all <- merge(all,income,by='county')
+all <- merge(all,bankruptcy,by='county')
+all <- merge(all,agricultural,by='county')
+all <- merge(all,juvenile,by='county')
+all <- merge(all,cr,by='county')
+
+
+corr <- cor(all[,-1],use='pairwise')
+
+eigen(corr)$values
+
+all$county <- tolower(all$county)
+  
+################################################################################
+
+list1 <- vector('list',nrow(train_))
+
+for(i in 1:nrow(train_)){
+  
+  id1  <- which(train_[i,18:42]==1)
+  id2  <-  tolower(trimws(strsplit(crime[id1,3],",")[[1]]))
+  
+  list1[[i]] <- t(data.frame(a = colMeans(all[all$county%in%id2,2:233])))
+  
+  print(i)
+}
+
+all_ <- smartbind(list = list1)
+
+train_ <- cbind(train_,all_)
+
+################################################################################
+
+list1 <- vector('list',nrow(final_test))
+
+for(i in 1:nrow(final_test)){
+  
+  id1  <- which(final_test[i,18:42]==1)
+  id2  <-  tolower(trimws(strsplit(crime[id1,3],",")[[1]]))
+  
+  list1[[i]] <- t(data.frame(a = colMeans(all[all$county%in%id2,2:233])))
+  
+  print(i)
+}
+
+all_ <- smartbind(list = list1)
+
+final_test <- cbind(final_test,all_)
+
+
+
+save.image("B:/Ongoing_Research/nij/nij/data/final_data.RData")
 
 
 
@@ -973,8 +1107,7 @@ test_submit$comp4 <- rowMeans(test_submit[,c('gun','Xv4')],na.rm=TRUE)
 
 
 
-
-
+corr <- as.data.frame(t(cor(out,train_[,-1])))
 
 
 

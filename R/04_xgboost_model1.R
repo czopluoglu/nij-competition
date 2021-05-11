@@ -2,15 +2,9 @@ require(xgboost)
 require(caret)
 require(pROC)
 require(xgboostExplainer)
+require(mltools)
 
-
-###############################################################################
-
-final_test <- test_submit[,c(1,34:126)]
-
-train_ <- full_data[,colnames(full_data)%in%colnames(final_test)]
-
-out <- full_data$y1
+load("B:/Ongoing_Research/nij/nij/data/final_data.RData")
 
 ###############################################################################
 
@@ -130,8 +124,8 @@ loc1 <- sample(vec,15000)
 loc2 <- vec[!vec%in%loc1]
 
 
-test  <- train_[loc2,]
-train <- train_[loc1,]
+test  <- train_[loc2,1:106]
+train <- train_[loc1,1:106]
 
 out2 <- out[loc2]
 out1 <- out[loc1]
@@ -960,14 +954,14 @@ myfolds <- createFolds(1:nrow(dtrain),10)
                      objective        = 'binary:logistic',
                      eval_metric      = 'logloss',
                      data             = dtrain,
-                     nrounds          = 870,
+                     nrounds          = 1000,
                      eta              = 0.01,
                      max_depth        = 4,
                      min_child_weight = 0.7,
                      gamma            = 0.12,
                      max_delta_step   = 1.2,
-                     subsample        = 1,
-                     colsample_bytree = 1,
+                     subsample        = 0.45,
+                     colsample_bytree = 0.9,
                      scale_pos_weight = 1,
                      num_parallel_tree= 8,
                      lambda           = 1,
@@ -987,12 +981,12 @@ myfolds <- createFolds(1:nrow(dtrain),10)
   
   outcome$pred2 <- ifelse(outcome$pred>.5,1,0)
   
-  eval(x=outcome,type='brier.m')  # 0.1893874
-  eval(x=outcome,type='brier.f')  # 0.1561657
-  eval(x=outcome,type='brier.a')  # 0.1853170
-  eval(x=outcome,type='fair.m')   # 0.8072879
-  eval(x=outcome,type='fair.f')   # 0.811482
-  auc_roc(preds = outcome$pred,actuals = outcome$out) #0.7034522    
+  eval(x=outcome,type='brier.m')  # 0.1888632
+  eval(x=outcome,type='brier.f')  # 0.1558662
+  eval(x=outcome,type='brier.a')  # 0.1848203
+  eval(x=outcome,type='fair.m')   # 0.8059253
+  eval(x=outcome,type='fair.f')   # 0.7992678
+  auc_roc(preds = outcome$pred,actuals = outcome$out) #0.7060   
   
 ###################################################
   
@@ -1030,7 +1024,7 @@ myfolds <- createFolds(1:nrow(dtrain),10)
   # Save the results for the competition test sample
   
   
-  dtest2  <- xgb.DMatrix(data = data.matrix(final_test[,-1]))
+  dtest2  <- xgb.DMatrix(data = data.matrix(final_test[,2:106]))
   
   pr2 <- predict(model,dtest2)
   
