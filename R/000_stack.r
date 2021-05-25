@@ -1,4 +1,6 @@
 
+require(here)
+require(mltools)
 ###############################################################################
 
 eval <- function(x,type){
@@ -94,6 +96,8 @@ m3 <- read.csv(here('data','test_model3.csv'))
 m4 <- read.csv(here('data','test_model4.csv'))
 m5 <- read.csv(here('data','test_model5.csv'))
 m6 <- read.csv(here('data','glmnet_test_model1.csv'))
+m7 <- read.csv(here('data','glmnet_test_model2.csv'))
+
 
 
 m1$pred2 <- ifelse(m1$pred>.5,1,0)
@@ -110,6 +114,7 @@ eval(x=m3,type='brier.m')
 eval(x=m4,type='brier.m') 
 eval(x=m5,type='brier.m') 
 eval(x=m6,type='brier.m') 
+eval(x=m7,type='brier.m') 
 
 eval(x=m1,type='brier.f') 
 eval(x=m2,type='brier.f') 
@@ -117,6 +122,7 @@ eval(x=m3,type='brier.f')
 eval(x=m4,type='brier.f') 
 eval(x=m5,type='brier.f') 
 eval(x=m6,type='brier.f') 
+eval(x=m7,type='brier.f') 
 
 
 eval(x=m1,type='brier.a') 
@@ -125,6 +131,7 @@ eval(x=m3,type='brier.a')
 eval(x=m4,type='brier.a') 
 eval(x=m5,type='brier.a') 
 eval(x=m6,type='brier.a') 
+eval(x=m7,type='brier.a') 
 
 
 eval(x=m1,type='fair.m') 
@@ -133,6 +140,7 @@ eval(x=m3,type='fair.m')
 eval(x=m4,type='fair.m') 
 eval(x=m5,type='fair.m') 
 eval(x=m6,type='fair.m') 
+eval(x=m7,type='fair.m') 
 
 
 eval(x=m1,type='fair.f') 
@@ -141,6 +149,8 @@ eval(x=m3,type='fair.f')
 eval(x=m4,type='fair.f') 
 eval(x=m5,type='fair.f') 
 eval(x=m6,type='fair.f') 
+eval(x=m7,type='fair.f') 
+
 
 
 
@@ -150,18 +160,23 @@ auc_roc(preds =m3$pred,actuals = m3$out)
 auc_roc(preds =m4$pred,actuals = m4$out)
 auc_roc(preds =m5$pred,actuals = m5$out)
 auc_roc(preds =m6$pred,actuals = m6$out)
+auc_roc(preds =m7$pred,actuals = m7$out)
+
 
 
 cor(cbind(m1$pred,
+          m2$pred,
           m3$pred,
           m4$pred,
-          m6$pred))
+          m5$pred,
+          m6$pred,
+          m7$pred))
 
 
 
 
 
-m <- (m1+m3+m4+m6)/4
+m <- (m1+m3+m4+m7)/4
 
 m$pred2 <- ifelse(m$pred>.5,1,0)
 
@@ -172,3 +187,47 @@ eval(x=m,type='brier.a')
 eval(x=m,type='fair.m') 
 eval(x=m,type='fair.f') 
 auc_roc(preds =m$pred,actuals = m$out)
+
+
+###############################################################################
+
+
+
+m1 <- read.csv(here('data','comptetition_test_model1.csv'))
+m2 <- read.csv(here('data','comptetition_test_model2.csv'))
+m3 <- read.csv(here('data','comptetition_test_model3.csv'))
+m4 <- read.csv(here('data','comptetition_test_model4.csv'))
+m5 <- read.csv(here('data','comptetition_test_model5.csv'))
+m6 <- read.csv(here('data','glmnet_comptetition_test_model1.csv'))
+m7 <- read.csv(here('data','glmnet_comptetition_test_model2.csv'))
+
+
+
+cor(cbind(m1$pred,
+          m2$pred,
+          m3$pred,
+          m4$pred,
+          m5$pred,
+          m6$pred,
+          m7$pred))
+
+
+m <- (m1+m3+m4+m7)/4
+
+m$pred2 <- ifelse(m$pred>.5,1,0)
+
+
+m <- m[,c('id','pred')]
+
+m[,2] <- round(m[,2],4)
+
+colnames(m) <- c('ID','Probability')
+
+
+write.csv(m, 
+          here('data','CrescentStar_1YearForecast.csv'),
+          row.names = FALSE)
+
+
+
+

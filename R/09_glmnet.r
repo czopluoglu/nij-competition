@@ -220,8 +220,6 @@ mean((pred[,1]-out2)^2)
 
 getModelInfo(model='glmnet')
 
-marsGrid <- expand.grid(alpha  = 1, 
-                        lambda = 1)
 
 cv_elastic <- caret::train(x = as.matrix(train[,2:645]),
                            y = as.factor(out1),

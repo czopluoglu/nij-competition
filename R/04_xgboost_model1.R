@@ -135,6 +135,9 @@ out1 <- out[loc1]
 dtrain <- xgb.DMatrix(data = data.matrix(train[,-1]), label=out1)
 dtest  <- xgb.DMatrix(data = data.matrix(test[,-1]),  label=out2)
 
+
+dfull  <- xgb.DMatrix(data = data.matrix(train_[,1:106]),  label=out)
+
 ################################################################################
 
 myfolds <- createFolds(1:nrow(dtrain),10)
@@ -950,11 +953,12 @@ myfolds <- createFolds(1:nrow(dtrain),10)
   
   
   watchlist <- list(train=dtrain, test=dtest)
+  
   model   <- xgb.train(booster          = 'gbtree',
                      objective        = 'binary:logistic',
                      eval_metric      = 'logloss',
                      data             = dtrain,
-                     nrounds          = 1000,
+                     nrounds          = 2000,
                      eta              = 0.01,
                      max_depth        = 4,
                      min_child_weight = 0.7,
@@ -1019,9 +1023,9 @@ myfolds <- createFolds(1:nrow(dtrain),10)
 
 ################################################################################
   
-  head(final_test)
-  
   # Save the results for the competition test sample
+
+  head(final_test)
   
   
   dtest2  <- xgb.DMatrix(data = data.matrix(final_test[,2:106]))
