@@ -1,14 +1,36 @@
+################################################################################
+
+# The code in this file creates summary crime statistics for each county.
+
+# Initial numbers are pulled from PDF files available at this link
+# https://gbi.georgia.gov/services/crime-statistics
+
+# then the numbers manually entered into an excel sheere
+#  /data/supplemental data/crime stat.xlsx
+
+# The code calculates the crime rates per 100,000 people for 10 variables 
+# (murder, rape, robbery, assault, burglary, larceny, theft, arson, and total). 
+
+# The crime rates were aggregated by calculating the average crime rate across 
+# five years for each county. 
+
+# The final county-level data is saved in the following file
+# /data/supplemental data/crime_summary.csv
+
+
+################################################################################
+
 require(dplyr)
 require(here)
 library(readxl)
 ################################################################################
 
 
-crime13 <- read_excel("data/crime stat.xlsx", sheet = "2013")
-crime14 <- read_excel("data/crime stat.xlsx", sheet = "2014")
-crime15 <- read_excel("data/crime stat.xlsx", sheet = "2015")
-crime16 <- read_excel("data/crime stat.xlsx", sheet = "2016")
-crime17 <- read_excel("data/crime stat.xlsx", sheet = "2017")
+crime13 <- read_excel("data/supplemental data/crime stat.xlsx", sheet = "2013")
+crime14 <- read_excel("data/supplemental data/crime stat.xlsx", sheet = "2014")
+crime15 <- read_excel("data/supplemental data/crime stat.xlsx", sheet = "2015")
+crime16 <- read_excel("data/supplemental data/crime stat.xlsx", sheet = "2016")
+crime17 <- read_excel("data/supplemental data/crime stat.xlsx", sheet = "2017")
 
 
 sum(crime13$county==crime14$county)

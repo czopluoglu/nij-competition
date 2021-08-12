@@ -1,3 +1,20 @@
+################################################################################
+
+# The code in this file downloads data from 2018 ACS 5-year estimate
+# recode each variable accordingly depending on its nature,
+# and then aggregate household level data at the PUMA level. 
+# In addition, it runs a PCA to create principal components from these variables.
+
+# At the end, it produces a summary dataset 72 x 300 (puma_summary.csv).
+# Each row represents a PUMA, and each column represents an aggregated variable
+# across households within that PUMA.
+
+# For detailed codebook about each variable, see 2014-2018 ACS PUMS Data Dictionary
+
+# https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2014-2018.pdf?
+
+################################################################################
+
 
 require(tidycensus)
 
