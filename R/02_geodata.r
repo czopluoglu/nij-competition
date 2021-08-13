@@ -72,7 +72,7 @@ geodata <- get_pums(variables =
               year = 2018)
 
 ################################################################################
-load("B:/Ongoing_Research/nij/nij/data/geodata.RData")
+load("B:/Ongoing_Research/nij/nij/data/supplemental data/geodata.RData")
 
 colnames(geodata) <- tolower(colnames(geodata))
 

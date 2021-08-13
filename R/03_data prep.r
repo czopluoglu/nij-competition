@@ -1,17 +1,32 @@
 
 require(here)
-
 require(mltools)
-
 require(dplyr)
 
 ################################################################################
-# Read the datasets
+# Read the datasets provided by NIJ
 
 full_data <- read.csv(here('data','NIJ_s_Recidivism_Challenge_Training_Dataset.csv'))
 
 test_submit <- read.csv(here('data','NIJ_s_Recidivism_Challenge_Test_Dataset1.csv'))
 
+################################################################################
+################################################################################
+################################################################################
+# This section of code process all 48 predictor variables by recoding them
+# into 122 newly constructed variables.
+
+# Binary variables --> dummy coding
+# Nominal variables --> one-hot encoding
+# Ordinal variables --> one-hot encoding, polynomial contrast coding, and numerical assignment
+
+# If a numerical variable coded as 
+# c(1,2,3,4,5, 6+), it is coded as 1,2,3,4,5,6. So, 6+ coded as 6. In addition,
+# a separate dummy variable is created such that 6+ is coded as 1 and c(1,2,3,4,5)
+# are coded as 0. 
+
+################################################################################
+################################################################################
 ################################################################################
 
 # Recode Gender into a dummy variable
@@ -921,6 +936,12 @@ full_data$y3 <- ifelse(full_data$Recidivism_Arrest_Year3=='true',1,0)
 
 ###############################################################################
 
+# 16 variables related to the number of crimes were used to run a principal 
+# component analysis, and PCA revealed that these 16 variables can be grouped
+# into 4 categories. 
+
+# A basic sum composite score created for each one of these four categories in
+# addition to 122 reconstructed variables.
 
 corr <- cor(full_data[,c('felony','misd','viol','prop','drug','dv','gun',
                          'cfelony','cmisd','cviol','cprop','cdrug',
@@ -953,6 +974,9 @@ test_submit$comp3 <- rowMeans(test_submit[,c('viol','dv','Xv3')],na.rm=TRUE)
 test_submit$comp4 <- rowMeans(test_submit[,c('gun','Xv4')],na.rm=TRUE)
 
 
+
+# In total, training dataset has 126 predictor variables at the end.
+
 ###############################################################################
 
 final_test <- test_submit[,c(1,34:138)]
@@ -965,6 +989,14 @@ out <- full_data$y1
 ###############################################################################
 ###############################################################################
 ###############################################################################
+
+#
+
+###############################################################################
+###############################################################################
+###############################################################################
+###############################################################################
+
 
 crime <- read.csv(here('data','supplemental data','crime_summary.csv'))
 puma  <- read.csv(here('data','supplemental data','puma_summary.csv'))
