@@ -171,7 +171,8 @@ ridge <- cv.glmnet(x = as.matrix(train[,2:645]),
 plot(ridge, main = "Ridge penalty\n\n")
 
 
-ridge$lambda.min
+ridge$lambda.min  #  0.05186993
+
 coef(ridge,ridge$lambda.min)
 
 ridge.fit <- glmnet(x = as.matrix(train[,2:645]), 
@@ -198,7 +199,7 @@ lasso <-  cv.glmnet(x = as.matrix(train[,2:645]),
 
 plot(lasso, main = "Lasso penalty\n\n")
 
-lasso$lambda.min
+lasso$lambda.min # 0.00195287
 coef(lasso,lasso$lambda.min)
 
 lasso.fit <- glmnet(x = as.matrix(train[,2:645]), 
@@ -331,6 +332,17 @@ auc_roc(preds = pred[,1],
 
 mean((pred[,1]-out2)^2)
 
+
+vI <- varImp(ridge.fit,scale=F,lambda= ridge$lambda.min)
+rownames(vI)[order(vI[,1],decreasing = TRUE)][1:15]
+
+
+# if X is the input matrix of the glmnet function,
+# and cv.result is your glmnet object:
+sds <- apply(X, 2, sd)
+cs <- as.matrix(coef(ridge.fit, s = "lambda.min"))
+std_coefs <- cs[-1, 1] * sds
+t(as.matrix(sort(abs(std_coefs),decreasing = TRUE))[1:15,])
 
 
 
