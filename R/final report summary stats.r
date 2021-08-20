@@ -331,6 +331,46 @@ round(eval(x=y1,type='fair.f'),4)
 round(eval(x=y1,type='fair.m'),4)
 round(auc_roc(preds =y1$pred,actuals = y1$out),3)
 
+
+###############################################################################
+
+# Output based on different thresholds
+
+
+fp <- c()
+tp <- c()
+pr <- c()
+
+th <- seq(.5,.999,.001)
+
+for(i in 1:length(th)){
+
+  m1$pred2 <- ifelse(m1$pred>th[i],1,0)
+
+  tab      <- matrix(nrow=2,ncol=2)
+  tab[1,1] <- sum(m1$out==0 & m1$pred2==0)
+  tab[1,2] <- sum(m1$out==0 & m1$pred2==1)
+  tab[2,1] <- sum(m1$out==1 & m1$pred2==0)
+  tab[2,2] <- sum(m1$out==1 & m1$pred2==1)
+  
+  fp[i] = tab[1,2]/sum(tab[1,])
+  tp[i] = tab[2,2]/sum(tab[2,])
+  pr[i] = tab[2,2]/sum(tab[,2])
+
+}
+
+
+
+plot(th,fp,type='l',ylim=c(0,1),ylab='',xlab='Threshold')
+points(th,tp,type='l',lty=2)
+points(th,pr,type='l',lty=3)
+
+text(0.5,0.58,'Precision')
+text(0.52,0.25,'True Positive Rate')
+text(0.52,0.09,'False Positive Rate')
+
+
+
 ################################################################################
 ################################################################################
 ################################################################################
